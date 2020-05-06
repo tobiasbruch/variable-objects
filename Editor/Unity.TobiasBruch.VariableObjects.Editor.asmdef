@@ -1,0 +1,17 @@
+{
+    "name": "Unity.TobiasBruch.VariableObjects.Editor",
+    "references": [
+        "GUID:3cf0a5a8382b1df4bbe05b99f04ab7b2"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
