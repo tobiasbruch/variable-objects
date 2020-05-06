@@ -71,86 +71,97 @@ namespace TobiasBruch.VariableObjects
         #endregion
 
 #if UNITY_EDITOR
-    [NonSerialized]
-    private BoolReferenceBase.DepthOne[] _oldConditions = new BoolReferenceBase.DepthOne[0];
-    [NonSerialized]
-    private VariableBase _oldFirstOperandVariable;
-    [NonSerialized]
-    private VariableBase _oldSecondOperandVariable;
+        [NonSerialized]
+        private BoolReferenceBase.DepthOne[] _oldConditions = new BoolReferenceBase.DepthOne[0];
+        [NonSerialized]
+        private VariableBase _oldFirstOperandVariable;
+        [NonSerialized]
+        private VariableBase _oldSecondOperandVariable;
 
-    public override void OnValidate()
-    {
-        if (Application.isPlaying)
+        public override void OnValidate()
         {
-            if (_oldConditions != _conditions)
+            if (Application.isPlaying)
             {
-                if (_eventValueChanged != null && _mode == Mode.MultipleConditions)
+                if (_oldConditions != _conditions)
                 {
-                    foreach (BoolReferenceBase.DepthOne condition in _oldConditions)
+                    if (_eventValueChanged != null && _mode == Mode.MultipleConditions)
                     {
-                        condition.EventValueChanged -= OnConditionChanged;
+                        foreach (BoolReferenceBase.DepthOne condition in _oldConditions)
+                        {
+                            condition.EventValueChanged -= OnConditionChanged;
+                        }
+                        foreach (BoolReferenceBase.DepthOne condition in _conditions)
+                        {
+                            condition.EventValueChanged += OnConditionChanged;
+                        }
+                        OnConditionChanged(_value, _value);
                     }
-                    foreach (BoolReferenceBase.DepthOne condition in _conditions)
-                    {
-                        condition.EventValueChanged += OnConditionChanged;
-                    }
-                    OnConditionChanged(_value, _value);
+                    _oldConditions = _conditions;
                 }
-                _oldConditions = _conditions;
-            }
 
-            if (_oldFirstOperandVariable != _firstOperandVariable)
-            {
-                if (_eventValueChanged != null && _mode == Mode.Comparison)
+                if (_oldFirstOperandVariable != _firstOperandVariable)
                 {
-                    _oldFirstOperandVariable.EventValueAsObjectChanged -= OnValueAsObjectChanged;
-                    _firstOperandVariable.EventValueAsObjectChanged += OnValueAsObjectChanged;
-                    _oldFirstOperandVariable = _firstOperandVariable;
+                    if (_eventValueChanged != null && _mode == Mode.Comparison)
+                    {
+                        if (_oldFirstOperandVariable != null)
+                        {
+                            _oldFirstOperandVariable.EventValueAsObjectChanged -= OnValueAsObjectChanged;
+                        }
+                        if (_firstOperandVariable != null)
+                        {
+                            _firstOperandVariable.EventValueAsObjectChanged += OnValueAsObjectChanged;
+                        }
+                        _oldFirstOperandVariable = _firstOperandVariable;
 
-                    object oldValue = null;
-                    if (_oldFirstOperandVariable != null)
-                    {
-                        oldValue = _oldFirstOperandVariable.GetValueAsObject();
-                    }
-                    object newValue = null;
-                    if (_firstOperandVariable != null)
-                    {
-                        newValue = _firstOperandVariable.GetValueAsObject();
-                    }
-                    if (oldValue != newValue)
-                    {
-                        OnValueAsObjectChanged(oldValue, newValue);
+                        object oldValue = null;
+                        if (_oldFirstOperandVariable != null)
+                        {
+                            oldValue = _oldFirstOperandVariable?.GetValueAsObject() || default;
+                        }
+                        object newValue = null;
+                        if (_firstOperandVariable != null)
+                        {
+                            newValue = _firstOperandVariable?.GetValueAsObject() || default;
+                        }
+                        if (oldValue != newValue)
+                        {
+                            OnValueAsObjectChanged(oldValue, newValue);
+                        }
                     }
                 }
-            }
 
-            if (_oldSecondOperandVariable != _secondOperandVariable)
-            {
-                if (_eventValueChanged != null && _mode == Mode.Comparison)
+                if (_oldSecondOperandVariable != _secondOperandVariable)
                 {
-                    _oldSecondOperandVariable.EventValueAsObjectChanged -= OnValueAsObjectChanged;
-                    _secondOperandVariable.EventValueAsObjectChanged += OnValueAsObjectChanged;
+                    if (_eventValueChanged != null && _mode == Mode.Comparison)
+                    {
+                        if (_oldSecondOperandVariable != null)
+                        {
+                            _oldSecondOperandVariable.EventValueAsObjectChanged -= OnValueAsObjectChanged;
+                        }
+                        if (_secondOperandVariable != null)
+                        {
+                            _secondOperandVariable.EventValueAsObjectChanged += OnValueAsObjectChanged;
+                        }
+                        object oldValue = null;
+                        if(_oldSecondOperandVariable != null)
+                        {
+                            oldValue = _oldSecondOperandVariable?.GetValueAsObject() || default;
+                        }
+                        object newValue = null;
+                        if(_secondOperandVariable != null)
+                        {
+                            newValue = _secondOperandVariable?.GetValueAsObject() || default;
+                        }
+                        if (oldValue != newValue) 
+                        {
+                            OnValueAsObjectChanged(oldValue, newValue);
+                        }
 
-                    object oldValue = null;
-                    if(_oldSecondOperandVariable != null)
-                    {
-                        oldValue = _oldSecondOperandVariable.GetValueAsObject();
+                        _oldSecondOperandVariable = _secondOperandVariable;
                     }
-                    object newValue = null;
-                    if(_secondOperandVariable != null)
-                    {
-                        newValue = _secondOperandVariable.GetValueAsObject();
-                    }
-                    if (oldValue != newValue) 
-                    {
-                        OnValueAsObjectChanged(oldValue, newValue);
-                    }
-
-                    _oldSecondOperandVariable = _secondOperandVariable;
                 }
             }
         }
-    }
 #endif
     }
 
