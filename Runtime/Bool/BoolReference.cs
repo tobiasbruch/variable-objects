@@ -116,12 +116,12 @@ namespace TobiasBruch.VariableObjects
                         object oldValue = null;
                         if (_oldFirstOperandVariable != null)
                         {
-                            oldValue = _oldFirstOperandVariable?.GetValueAsObject() || default;
+                            oldValue = _oldFirstOperandVariable.GetValueAsObject();
                         }
                         object newValue = null;
                         if (_firstOperandVariable != null)
                         {
-                            newValue = _firstOperandVariable?.GetValueAsObject() || default;
+                            newValue = _firstOperandVariable.GetValueAsObject();
                         }
                         if (oldValue != newValue)
                         {
@@ -145,12 +145,12 @@ namespace TobiasBruch.VariableObjects
                         object oldValue = null;
                         if(_oldSecondOperandVariable != null)
                         {
-                            oldValue = _oldSecondOperandVariable?.GetValueAsObject() || default;
+                            oldValue = _oldSecondOperandVariable.GetValueAsObject();
                         }
                         object newValue = null;
                         if(_secondOperandVariable != null)
                         {
-                            newValue = _secondOperandVariable?.GetValueAsObject() || default;
+                            newValue = _secondOperandVariable.GetValueAsObject();
                         }
                         if (oldValue != newValue) 
                         {
