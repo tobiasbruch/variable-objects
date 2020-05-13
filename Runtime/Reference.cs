@@ -13,7 +13,7 @@ namespace TobiasBruch.VariableObjects
 
         public bool UsesVariable { get => _variable; }
 
-        protected Action<T1, T1> _eventValueChanged;
+        protected Action<T1, T1> _eventValueChanged = delegate { };
         public virtual Action<T1, T1> EventValueChanged
         {
             get => _eventValueChanged;
