@@ -385,7 +385,7 @@ namespace TobiasBruch.VariableObjects
             bool newValue = Value;
             if (oldValue != newValue)
             {
-                EventValueChanged(oldValue, newValue);
+                EventValueChanged?.Invoke(oldValue, newValue);
             }
         }
         protected void OnConditionChanged(bool oldConditionValue, bool newConditionValue)

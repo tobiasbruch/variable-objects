@@ -16,11 +16,13 @@ namespace TobiasBruch.VariableObjects
             get => _value;
             set
             {
+                UnityEngine.Debug.Log(value + "   " + _value);
                 if (value == null)
                 {
                     if (_value != null)
                     {
                         T oldValue = _value;
+                        UnityEngine.Debug.Log("A");
                         EventValueChanged(_value, _value = value);
                         EventValueAsObjectChanged(oldValue, _value);
                     }
@@ -28,6 +30,7 @@ namespace TobiasBruch.VariableObjects
                 else if (!value.Equals(_value))
                 {
                     T oldValue = _value;
+                    UnityEngine.Debug.Log("B");
                     EventValueChanged(_value, _value = value);
                     EventValueAsObjectChanged(oldValue, _value);
                 }

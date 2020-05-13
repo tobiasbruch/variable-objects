@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Diagnostics;
+using TMPro;
 using UnityEngine;
 
 namespace TobiasBruch.VariableObjects
@@ -25,6 +26,7 @@ namespace TobiasBruch.VariableObjects
 
         protected override void OnValueChanged(T1 oldValue, T1 newValue)
         {
+            UnityEngine.Debug.Log("NEW " + newValue);
             if (string.IsNullOrWhiteSpace(_text))
             {
                 _textComponent.text = newValue?.ToString();
