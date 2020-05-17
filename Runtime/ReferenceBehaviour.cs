@@ -6,9 +6,8 @@ namespace TobiasBruch.VariableObjects
         [SerializeField]
         private T3 _reference = default;
         [SerializeField]
-        private bool _updateWhileEnabled = true;
-        [SerializeField]
         private bool _updateOnEnable = true;
+        
         public T1 Value
         {
             get => _reference.Value;
@@ -21,7 +20,7 @@ namespace TobiasBruch.VariableObjects
         protected virtual void OnEnable()
         {
             _reference.EventValueChanged += OnValueChangedThroughEvent;
-            if (_updateOnEnable)
+            if (_updateOnEnable && gameObject.activeInHierarchy)
             {
                 OnValueChanged(_reference.Value, _reference.Value);
             }
@@ -36,7 +35,7 @@ namespace TobiasBruch.VariableObjects
 #if UNITY_EDITOR
         _lastValidatedValue = newValue;
 #endif
-            if (_updateWhileEnabled && gameObject.activeInHierarchy)
+            if (gameObject.activeInHierarchy)
             {
                 OnValueChanged(oldValue, newValue);
             }

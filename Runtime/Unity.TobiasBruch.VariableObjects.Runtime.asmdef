@@ -1,7 +1,8 @@
 {
     "name": "Unity.TobiasBruch.VariableObjects.Runtime",
     "references": [
-        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:c1fe994c731e53a46b3848e4a2e9a6c2"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
