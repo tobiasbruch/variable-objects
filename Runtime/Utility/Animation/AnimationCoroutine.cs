@@ -42,7 +42,10 @@ namespace TobiasBruch.VariableObjects
         
         public IEnumerator Play()
         {
-            _onStart.Invoke();
+            if (_onStart != null)
+            {
+                _onStart.Invoke();
+            }
 
             switch (_type)
             {
@@ -60,7 +63,11 @@ namespace TobiasBruch.VariableObjects
                 default:
                     yield break;
             }
-            _onFinish.Invoke();
+
+            if (_onFinish != null)
+            {
+                _onFinish.Invoke();
+            }
         }
         private IEnumerator PlayAnimation()
         {
