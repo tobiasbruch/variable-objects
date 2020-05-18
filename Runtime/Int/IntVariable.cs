@@ -4,38 +4,38 @@ namespace TobiasBruch.VariableObjects
     [CreateAssetMenu(fileName = "Int", menuName = "Variables/Int", order = 100)]
     public class IntVariable : Variable<int>
     {
-        public int Add(int value)
+        public void Add(int value)
         {
-            return Value += value;
+            Value += value;
         }
-        public int Subtract(int value)
+        public void Subtract(int value)
         {
-            return Value -= value;
+            Value -= value;
         }
-        public int Multiply(int value)
+        public void Multiply(int value)
         {
-            return Value *= value;
+            Value *= value;
         }
-        public int Divide(int value)
+        public void Divide(int value)
         {
-            return Value /= value;
+            Value /= value;
         }
         
-        public int Add(IntVariable variable)
+        public void Add(IntVariable variable)
         {
-            return Add(variable.Value);
+            Add(variable.Value);
         }
-        public int Subtract(IntVariable variable)
+        public void Subtract(IntVariable variable)
         {
-            return Subtract(variable.Value);
+            Subtract(variable.Value);
         }
-        public int Multiply(IntVariable variable)
+        public void Multiply(IntVariable variable)
         {
-            return Multiply(variable.Value);
+            Multiply(variable.Value);
         }
-        public int Divide(IntVariable variable)
+        public void Divide(IntVariable variable)
         {
-            return Divide(variable.Value);
+            Divide(variable.Value);
         }
     }
 }

@@ -4,38 +4,38 @@ namespace TobiasBruch.VariableObjects
     [CreateAssetMenu(fileName = "Float", menuName = "Variables/Float", order = 100)]
     public class FloatVariable : Variable<float>
     {
-        public float Add(float value)
+        public void Add(float value)
         {
-            return Value += value;
+            Value += value;
         }
-        public float Subtract(float value)
+        public void Subtract(float value)
         {
-            return Value -= value;
+            Value -= value;
         }
-        public float Multiply(float value)
+        public void Multiply(float value)
         {
-            return Value *= value;
+            Value *= value;
         }
-        public float Divide(float value)
+        public void Divide(float value)
         {
-            return Value /= value;
+            Value /= value;
         }
         
-        public float Add(FloatVariable variable)
+        public void Add(FloatVariable variable)
         {
-            return Add(variable.Value);
+            Add(variable.Value);
         }
-        public float Subtract(FloatVariable variable)
+        public void Subtract(FloatVariable variable)
         {
-            return Subtract(variable.Value);
+            Subtract(variable.Value);
         }
-        public float Multiply(FloatVariable variable)
+        public void Multiply(FloatVariable variable)
         {
-            return Multiply(variable.Value);
+            Multiply(variable.Value);
         }
-        public float Divide(FloatVariable variable)
+        public void Divide(FloatVariable variable)
         {
-            return Divide(variable.Value);
+            Divide(variable.Value);
         }
     }
 }
