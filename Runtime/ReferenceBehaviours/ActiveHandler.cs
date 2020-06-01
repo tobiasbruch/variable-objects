@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
-using DG.Tweening;
 using System.Collections;
 
 namespace TobiasBruch.VariableObjects
