@@ -65,14 +65,28 @@ namespace TobiasBruch.VariableObjects
         {
             if (_value != null)
             {
-                EventValueChanged(_lastSetValue, _value);
-                EventValueAsObjectChanged(_lastSetValue, _value);
+                if(!_value.Equals(Value))
+                {
+                    Value = _value;
+                }
+                else
+                {
+                    EventValueChanged(_lastSetValue, _value);
+                    EventValueAsObjectChanged(_lastSetValue, _value);
+                }
             }
         }
         else if (!_lastSetValue.Equals(_value))
         {
-            EventValueChanged(_lastSetValue, _value);
-            EventValueAsObjectChanged(_lastSetValue, _value);
+            if(!Value.Equals(_value))
+            {
+                Value = _value;
+            }
+            else
+            {
+                EventValueChanged(_lastSetValue, _value);
+                EventValueAsObjectChanged(_lastSetValue, _value);
+            }
         }
 
         _lastSetValue = _value;
