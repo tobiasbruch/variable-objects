@@ -8,7 +8,7 @@ namespace TobiasBruch.VariableObjects
         [SerializeField]
         private bool _resetToDefaultValue = true;
         [SerializeField]
-        private T _defaultValue = default;
+        protected T _defaultValue = default;
         [SerializeField]
         protected T _value = default;
         public virtual T Value
