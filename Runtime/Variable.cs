@@ -58,14 +58,31 @@ namespace TobiasBruch.VariableObjects
         }
 
 #if UNITY_EDITOR
-    private T _lastSetValue = default;
-    private void OnValidate()
-    {
-        if (_lastSetValue == null)
+        private T _lastSetValue = default;
+        private void OnValidate()
         {
-            if (_value != null)
+            if(!Application.isPlaying)
             {
-                if(!_value.Equals(Value))
+                ResetToDefaultValue();
+            }
+            if (_lastSetValue == null)
+            {
+                if (_value != null)
+                {
+                    if(!_value.Equals(Value))
+                    {
+                        Value = _value;
+                    }
+                    else
+                    {
+                        EventValueChanged(_lastSetValue, _value);
+                        EventValueAsObjectChanged(_lastSetValue, _value);
+                    }
+                }
+            }
+            else if (!_lastSetValue.Equals(_value))
+            {
+                if(!Value.Equals(_value))
                 {
                     Value = _value;
                 }
@@ -75,22 +92,9 @@ namespace TobiasBruch.VariableObjects
                     EventValueAsObjectChanged(_lastSetValue, _value);
                 }
             }
-        }
-        else if (!_lastSetValue.Equals(_value))
-        {
-            if(!Value.Equals(_value))
-            {
-                Value = _value;
-            }
-            else
-            {
-                EventValueChanged(_lastSetValue, _value);
-                EventValueAsObjectChanged(_lastSetValue, _value);
-            }
-        }
 
-        _lastSetValue = _value;
-    }
+            _lastSetValue = _value;
+        }
 #endif
     }
     /// <summary>

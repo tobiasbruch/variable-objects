@@ -10,12 +10,21 @@ namespace TobiasBruch.VariableObjects
         [SerializeField]
         private List<T> _items = new List<T>();
         [SerializeField]
-        private Action<T> EventItemAdded = delegate{};
-        [SerializeField]
-        private Action<T> EventItemRemoved = delegate{};
+        private bool _reset = false;
+
+        public Action<T> EventItemAdded = delegate{};
+        public Action<T> EventItemRemoved = delegate{};
         
         public int Count { get => _items.Count; }
         
+        private void OnEnable()
+        {
+            if (_reset)
+            {
+                _items = new List<T>();
+            }
+        }
+
         public void Add(T item)
         {
             _items.Add(item);
@@ -30,6 +39,12 @@ namespace TobiasBruch.VariableObjects
             }
             return result;
         }
+
+        public bool Contains(T item)
+        {
+            return _items.Contains(item);
+        }
+
         public IEnumerator GetEnumerator()
         {
             return _items.GetEnumerator();

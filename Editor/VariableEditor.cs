@@ -3,6 +3,7 @@
 namespace TobiasBruch.VariableObjects
 {
     [CustomEditor(typeof(VariableBase), true)]
+    [CanEditMultipleObjects]
     public class VariableEditor : Editor
     {
 

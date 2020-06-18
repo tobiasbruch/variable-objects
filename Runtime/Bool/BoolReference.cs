@@ -3,7 +3,7 @@ using UnityEngine;
 namespace TobiasBruch.VariableObjects
 {
     [System.Serializable]
-    public class BoolReference : BoolReferenceBase
+    public sealed class BoolReference : BoolReferenceBase
     {
         #region Logic
         [SerializeField]
