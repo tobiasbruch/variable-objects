@@ -31,32 +31,6 @@ namespace TobiasBruch.VariableObjects
                         }
                     }
                     return false;
-                case LogicalOperator.NOT:
-                    foreach (BoolReferenceBase.DepthOne boolRef in _conditions)
-                    {
-                        if (boolRef.Value)
-                        {
-                            return false;
-                        }
-                    }
-                    return true;
-                case LogicalOperator.XOR:
-                    bool xor = false;
-                    foreach (BoolReferenceBase.DepthOne boolRef in _conditions)
-                    {
-                        if (boolRef.Value)
-                        {
-                            if (xor == false)
-                            {
-                                xor = true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
-                        }
-                    }
-                    return xor;
             }
             return false;
         }
@@ -77,6 +51,8 @@ namespace TobiasBruch.VariableObjects
         private VariableBase _oldFirstOperandVariable;
         [NonSerialized]
         private VariableBase _oldSecondOperandVariable;
+        [NonSerialized]
+        private bool _oldInvert;
 
         public override void OnValidate()
         {
@@ -160,6 +136,15 @@ namespace TobiasBruch.VariableObjects
                         _oldSecondOperandVariable = _secondOperandVariable;
                     }
                 }
+
+                bool invert = _invert && base.UsesVariable;
+                if (_oldInvert != invert)
+                {
+                    bool newValue = Value;
+                    bool oldValue = !newValue;
+                    EventValueChanged?.Invoke(oldValue, newValue);
+                    _oldInvert = _invert;
+                }
             }
         }
 #endif
@@ -198,32 +183,6 @@ namespace TobiasBruch.VariableObjects
                             }
                         }
                         return false;
-                    case LogicalOperator.NOT:
-                        foreach (DepthTwo boolRef in _conditions)
-                        {
-                            if (boolRef.Value)
-                            {
-                                return false;
-                            }
-                        }
-                        return true;
-                    case LogicalOperator.XOR:
-                        bool xor = false;
-                        foreach (DepthTwo boolRef in _conditions)
-                        {
-                            if (boolRef.Value)
-                            {
-                                if (xor == false)
-                                {
-                                    xor = true;
-                                }
-                                else
-                                {
-                                    return false;
-                                }
-                            }
-                        }
-                        return xor;
                 }
                 return false;
             }
@@ -264,32 +223,6 @@ namespace TobiasBruch.VariableObjects
                             }
                         }
                         return false;
-                    case LogicalOperator.NOT:
-                        foreach (DepthSealed boolRef in _conditions)
-                        {
-                            if (boolRef.Value)
-                            {
-                                return false;
-                            }
-                        }
-                        return true;
-                    case LogicalOperator.XOR:
-                        bool xor = false;
-                        foreach (DepthSealed boolRef in _conditions)
-                        {
-                            if (boolRef.Value)
-                            {
-                                if (xor == false)
-                                {
-                                    xor = true;
-                                }
-                                else
-                                {
-                                    return false;
-                                }
-                            }
-                        }
-                        return xor;
                 }
                 return false;
             }
@@ -317,6 +250,8 @@ namespace TobiasBruch.VariableObjects
 
         [SerializeField]
         protected Mode _mode = Mode.Value;
+        [SerializeField]
+        protected bool _invert = false;
 
         public override bool Value
         {
@@ -325,11 +260,14 @@ namespace TobiasBruch.VariableObjects
                 switch (_mode)
                 {
                     case Mode.Comparison:
-                        return _value = GetValueComparison();
+                        _value = GetValueComparison();
+                        return _invert ? !_value : _value;
                     case Mode.MultipleConditions:
-                        return _value = GetValueMultipleConditions();
+                        _value = GetValueMultipleConditions();
+                        return _invert ? !_value : _value;
                     default:
-                        return base.Value;
+                        bool invert = _invert && base.UsesVariable;
+                        return invert ? !base.Value : base.Value;
                 }
             }
             set
@@ -341,7 +279,8 @@ namespace TobiasBruch.VariableObjects
                     case Mode.MultipleConditions:
                         break;
                     default:
-                        base.Value = value;
+                        bool invert = _invert && base.UsesVariable;
+                        base.Value = invert ? !value : value;
                         break;
                 }
             }
@@ -383,6 +322,7 @@ namespace TobiasBruch.VariableObjects
         {
             bool oldValue = _value;
             bool newValue = Value;
+
             if (oldValue != newValue)
             {
                 EventValueChanged?.Invoke(oldValue, newValue);
@@ -500,9 +440,7 @@ namespace TobiasBruch.VariableObjects
         protected enum LogicalOperator
         {
             AND,
-            OR,
-            NOT,
-            XOR
+            OR
         }
         #endregion
 

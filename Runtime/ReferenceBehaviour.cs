@@ -5,8 +5,6 @@ namespace TobiasBruch.VariableObjects
     {
         [SerializeField]
         private T3 _reference = default;
-        [SerializeField]
-        private bool _updateOnEnable = true;
         
         public T1 Value
         {
@@ -20,7 +18,7 @@ namespace TobiasBruch.VariableObjects
         protected virtual void OnEnable()
         {
             _reference.EventValueChanged += OnValueChangedThroughEvent;
-            if (_updateOnEnable && gameObject.activeInHierarchy)
+            if (gameObject.activeInHierarchy)
             {
                 OnValueChanged(_reference.Value, _reference.Value);
             }

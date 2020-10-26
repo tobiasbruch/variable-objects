@@ -132,20 +132,32 @@ namespace TobiasBruch.VariableObjects
                         break;
                 }
 
+                bool invert = false;
+                if (valueIsReadOnly)
+                {
+                    SerializedProperty invertProperty = property.FindPropertyRelative("_invert");
+                    height = EditorGUI.GetPropertyHeight(invertProperty);
+                    rect = new Rect(position.x, rectYPosition, position.width, height);
+                    rectYPosition += height;
+                    EditorGUI.PropertyField(rect, invertProperty);
+                    invert = invertProperty.boolValue;
+
+                    GUI.enabled = false;
+                }
                 SerializedProperty valueProperty = property.FindPropertyRelative("_value");
                 height = EditorGUI.GetPropertyHeight(valueProperty);
                 rect = new Rect(position.x, rectYPosition, position.width, height);
                 rectYPosition += height;
-                if (valueIsReadOnly)
+                if(valueIsReadOnly)
                 {
-                    GUI.enabled = false;
-                    EditorGUI.PropertyField(rect, valueProperty);
-                    GUI.enabled = true;
+                    EditorGUI.Toggle(rect, new GUIContent("Value"), invert ? !valueProperty.boolValue : valueProperty.boolValue);
                 }
                 else
                 {
-                    EditorGUI.PropertyField(rect, valueProperty);
+                    valueProperty.boolValue = EditorGUI.Toggle(rect, new GUIContent("Value"), invert ? !valueProperty.boolValue : valueProperty.boolValue);
                 }
+                GUI.enabled = true;
+
                 EditorGUI.indentLevel--;
             }
         }
@@ -158,13 +170,18 @@ namespace TobiasBruch.VariableObjects
                 SerializedProperty modeProperty = property.FindPropertyRelative("_mode");
                 height += EditorGUI.GetPropertyHeight(modeProperty);
                 BoolReference.Mode mode = (BoolReference.Mode)modeProperty.enumValueIndex;
+                bool valueIsReadOnly = false;
                 switch (mode)
                 {
                     case BoolReference.Mode.Value:
                         SerializedProperty variableProperty = property.FindPropertyRelative("_variable");
                         height += EditorGUI.GetPropertyHeight(variableProperty);
+
+                        valueIsReadOnly = variableProperty.objectReferenceValue != null;
                         break;
                     case BoolReference.Mode.Comparison:
+                        valueIsReadOnly = true;
+
                         SerializedProperty firstOperandVariableProperty = property.FindPropertyRelative("_firstOperandVariable");
                         height += EditorGUI.GetPropertyHeight(firstOperandVariableProperty);
 
@@ -195,6 +212,8 @@ namespace TobiasBruch.VariableObjects
                         }
                         break;
                     case BoolReference.Mode.MultipleConditions:
+                        valueIsReadOnly = true;
+
                         SerializedProperty logicOperatorProperty = property.FindPropertyRelative("_logicOperator");
                         height += EditorGUI.GetPropertyHeight(logicOperatorProperty);
 
@@ -208,6 +227,12 @@ namespace TobiasBruch.VariableObjects
                             height += 18f;
                         }
                         break;
+                }
+
+                if (valueIsReadOnly)
+                {
+                    SerializedProperty invertProperty = property.FindPropertyRelative("_invert");
+                    height += EditorGUI.GetPropertyHeight(invertProperty);
                 }
 
                 SerializedProperty valueProperty = property.FindPropertyRelative("_value");
