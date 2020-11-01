@@ -107,20 +107,10 @@ namespace TobiasBruch.VariableObjects
                         SerializedProperty logicOperandsProperty = property.FindPropertyRelative("_conditions");
                         if (logicOperandsProperty != null)
                         {
-                            if (logicOperandsProperty.isExpanded)
-                            {
-                                height = EditorGUI.GetPropertyHeight(logicOperandsProperty);
-                                rect = new Rect(position.x, rectYPosition, position.width, height);
-                                rectYPosition += height;
-                                EditorGUI.PropertyField(rect, logicOperandsProperty, true);
-                            }
-                            else
-                            {
-                                height = EditorGUI.GetPropertyHeight(logicOperandsProperty);
-                                rect = new Rect(position.x, rectYPosition, position.width, height);
-                                rectYPosition += height;
-                                EditorGUI.PropertyField(rect, logicOperandsProperty);
-                            }
+                            height = EditorGUI.GetPropertyHeight(logicOperandsProperty);
+                            rect = new Rect(position.x, rectYPosition, position.width, height);
+                            rectYPosition += height;
+                            EditorGUI.PropertyField(rect, logicOperandsProperty, logicOperandsProperty.isExpanded);
                         }
                         else
                         {
