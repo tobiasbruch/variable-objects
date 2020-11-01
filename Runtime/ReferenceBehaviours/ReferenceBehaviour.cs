@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 namespace TobiasBruch.VariableObjects
 {
-    public abstract class ReferenceBehaviour<T> : ReferenceBehaviour<T, Variable<T>, Reference<T, Variable<T>>> { }
     public abstract class ReferenceBehaviour<T1, T2, T3> : MonoBehaviour where T3 : Reference<T1, T2> where T2 : Variable<T1>
     {
         [SerializeField]
@@ -106,4 +105,5 @@ namespace TobiasBruch.VariableObjects
             WhileAlive
         }
     }
+    public abstract class ReferenceBehaviour<T> : ReferenceBehaviour<T, Variable<T>, Reference<T, Variable<T>>> { }
 }
