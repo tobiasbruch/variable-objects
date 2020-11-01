@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TobiasBruch.VariableObjects
 {
-    public abstract class CollectionBehaviour<T1, T2> : MonoBehaviour where T2 : Collection<T1>
+    public abstract class CollectionBehaviour<T1, T2> : MonoBehaviour where T2 : CollectionObject<T1>
     {
         [SerializeField]
         private T2 _collection = default;

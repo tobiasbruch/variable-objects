@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace TobiasBruch.VariableObjects
 {
-    public class Collection<T> : ScriptableObject, IEnumerable<T>
+    public class CollectionObject<T> : ScriptableObject, IEnumerable<T>
     {
         [SerializeField]
         private List<T> _items = new List<T>();
