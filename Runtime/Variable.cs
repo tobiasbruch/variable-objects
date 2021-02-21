@@ -36,7 +36,7 @@ namespace TobiasBruch.VariableObjects
 #endif
             }
         }
-        public Action<T, T> EventValueChanged = delegate { };
+        public event Action<T, T> EventValueChanged = delegate { };
 
 
         private void OnEnable()

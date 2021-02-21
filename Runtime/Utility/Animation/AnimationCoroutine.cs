@@ -20,13 +20,9 @@ namespace TobiasBruch.VariableObjects
         [SerializeField]
         private Animator _animator = default;
         [SerializeField]
-        private string _animatorBool = default;
+        private string _animatorState = default;        
         [SerializeField]
-        private bool _animatorBoolValue = true;
-        [SerializeField]
-        private string _animatorTrigger = default;
-        [SerializeField]
-        private string _animatorFinishedEventName = default;
+        private int _animatorLayer = 0;
 #if DOTWEENPRO
         [SerializeField]
         private DOTweenAnimation _doTweenAnimation = default;
@@ -36,10 +32,7 @@ namespace TobiasBruch.VariableObjects
         private UnityEvent _onStart = default;
         [SerializeField]
         private UnityEvent _onFinish = default;
-        
-        private bool _animatorIsDone = false;
-        private AnimationEventRepeater _animationEventRepeater = default;
-        
+                
         public IEnumerator Play()
         {
             if (_onStart != null)
@@ -76,33 +69,12 @@ namespace TobiasBruch.VariableObjects
         }
         private IEnumerator PlayAnimator()
         {
-            if(!string.IsNullOrEmpty(_animatorBool))
-            {
-                _animator.SetBool(_animatorBool, _animatorBoolValue);
-            }
-            if(!string.IsNullOrEmpty(_animatorTrigger))
-            {
-                _animator.SetTrigger(_animatorTrigger);
-            }
-            _animationEventRepeater = null;
-            _animationEventRepeater = _animator.GetComponent<AnimationEventRepeater>();
-            if(_animationEventRepeater != null && !string.IsNullOrEmpty(_animatorFinishedEventName))
-            {
-                _animatorIsDone = false;
-                _animationEventRepeater.onAnimationEvent.AddListener(OnAnimationEventDone);
-                
-                yield return new WaitUntil(()=>_animatorIsDone);
-            }
+            _animator.Play(_animatorState, _animatorLayer);
+            yield return new WaitForEndOfFrame();
+            AnimatorStateInfo state = _animator.GetCurrentAnimatorStateInfo(_animatorLayer);
+            yield return new WaitForSeconds( state.length - Time.deltaTime );
         }
         
-        private void OnAnimationEventDone(string eventName)
-        {
-            if(eventName == _animatorFinishedEventName)
-            {
-                _animatorIsDone = true;
-                _animationEventRepeater.onAnimationEvent.RemoveListener(OnAnimationEventDone);
-            }
-        }
 #if DOTWEENPRO
         private IEnumerator PlayDoTween()
         {

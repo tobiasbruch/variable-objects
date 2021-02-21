@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 namespace TobiasBruch.VariableObjects
 {
@@ -23,22 +24,24 @@ namespace TobiasBruch.VariableObjects
 
             if (newValue)
             {
-                gameObject.SetActive(true);
-                _coroutine = StartCoroutine(ShowCoroutine());
+                _coroutine = StartCoroutine(ShowAsync());
             }
             else
             {
-                _coroutine = StartCoroutine(HideCoroutine());
+                _coroutine = StartCoroutine(HideAsync());
             }
         }
 
-        private IEnumerator ShowCoroutine()
+        public IEnumerator ShowAsync(Action onFinish = null)
         {
+            gameObject.SetActive(true);            
+            onFinish?.Invoke();
             yield return _showAnimation.Play();
         }
-        private IEnumerator HideCoroutine()
+        public IEnumerator HideAsync(Action onFinish = null)
         {
             yield return _hideAnimation.Play();
+            onFinish?.Invoke();
             gameObject.SetActive(false);
         }
     }

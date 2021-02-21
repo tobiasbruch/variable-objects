@@ -5,6 +5,11 @@ namespace TobiasBruch.VariableObjects
     [System.Serializable]
     public sealed class BoolReference : BoolReferenceBase
     {
+        public BoolReference(bool value)
+        {
+            _value = value;
+        }
+        
         #region Logic
         [SerializeField]
         private BoolReferenceBase.DepthOne[] _conditions = default;

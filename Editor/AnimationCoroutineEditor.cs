@@ -45,10 +45,8 @@ namespace TobiasBruch.VariableObjects
                         break;
                     case AnimationCoroutine.Type.Animator:
                         DrawProperty(position, property.FindPropertyRelative("_animator"));
-                        DrawProperty(position, property.FindPropertyRelative("_animatorBool"));
-                        DrawProperty(position, property.FindPropertyRelative("_animatorBoolValue"));
-                        DrawProperty(position, property.FindPropertyRelative("_animatorTrigger"));
-                        DrawProperty(position, property.FindPropertyRelative("_animatorFinishedEventName"));
+                        DrawProperty(position, property.FindPropertyRelative("_animatorState"));
+                        DrawProperty(position, property.FindPropertyRelative("_animatorLayer"));
                         break;
 #if DOTWEENPRO
                     case AnimationCoroutine.Type.DOTween:
@@ -80,10 +78,8 @@ namespace TobiasBruch.VariableObjects
                         break;
                     case AnimationCoroutine.Type.Animator:
                         height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("_animator"));
-                        height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("_animatorBool"));
-                        height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("_animatorBoolValue"));
-                        height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("_animatorTrigger"));
-                        height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("_animatorFinishedEventName"));
+                        height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("_animatorState"));
+                        height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("_animatorLayer"));
                         break;
 #if DOTWEENPRO
                     case AnimationCoroutine.Type.DOTween:

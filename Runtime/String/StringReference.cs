@@ -136,6 +136,12 @@ namespace TobiasBruch.VariableObjects
                 }
                 return _string;
             }
+
+            public FormatArgument(string str, VariableBase variable)
+            {
+                _string = str;
+                _variable = variable;
+            }
         }
 
         public enum Mode
