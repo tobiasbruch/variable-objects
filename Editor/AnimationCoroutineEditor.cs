@@ -48,6 +48,9 @@ namespace TobiasBruch.VariableObjects
                         DrawProperty(position, property.FindPropertyRelative("_animatorState"));
                         DrawProperty(position, property.FindPropertyRelative("_animatorLayer"));
                         break;
+                    case AnimationCoroutine.Type.Custom:
+                        DrawProperty(position, property.FindPropertyRelative("_customCallbackEvent"));                                            
+                        break;
 #if DOTWEENPRO
                     case AnimationCoroutine.Type.DOTween:
                         DrawProperty(position, property.FindPropertyRelative("_doTweenAnimation"), "Animation");
@@ -80,6 +83,9 @@ namespace TobiasBruch.VariableObjects
                         height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("_animator"));
                         height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("_animatorState"));
                         height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("_animatorLayer"));
+                        break;
+                    case AnimationCoroutine.Type.Custom:
+                        height += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("_customCallbackEvent"));
                         break;
 #if DOTWEENPRO
                     case AnimationCoroutine.Type.DOTween:

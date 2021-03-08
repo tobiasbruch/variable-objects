@@ -23,6 +23,8 @@ namespace TobiasBruch.VariableObjects
         private string _animatorState = default;        
         [SerializeField]
         private int _animatorLayer = 0;
+        [SerializeField]
+        private UnityEventAction _customCallbackEvent = default;
 #if DOTWEENPRO
         [SerializeField]
         private DOTweenAnimation _doTweenAnimation = default;
@@ -47,6 +49,9 @@ namespace TobiasBruch.VariableObjects
                     break;
                 case Type.Animator:
                     yield return PlayAnimator();
+                    break;
+                case Type.Custom:
+                    yield return PlayCustom();
                     break;
 #if DOTWEENPRO
                 case Type.DOTween:
@@ -74,6 +79,15 @@ namespace TobiasBruch.VariableObjects
             AnimatorStateInfo state = _animator.GetCurrentAnimatorStateInfo(_animatorLayer);
             yield return new WaitForSeconds( state.length - Time.deltaTime );
         }
+        private IEnumerator PlayCustom()
+        {
+            bool isDone = false;
+            
+            System.Action callback = () => isDone = true;
+            _customCallbackEvent.Invoke(callback);
+            
+            yield return new WaitUntil(()=> isDone);
+        }
         
 #if DOTWEENPRO
         private IEnumerator PlayDoTween()
@@ -96,12 +110,16 @@ namespace TobiasBruch.VariableObjects
             _doTweenAnimation.gameObject.SetActive(false);
         }
 #endif
-
+        
+        [System.Serializable]
+        private class UnityEventAction : UnityEvent<System.Action>{}
+        
         public enum Type
         {
             None,
             Animation,
-            Animator
+            Animator,
+            Custom
 #if DOTWEENPRO
             ,DOTween
 #endif
