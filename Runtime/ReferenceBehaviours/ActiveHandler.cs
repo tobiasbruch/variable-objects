@@ -10,7 +10,7 @@ namespace TobiasBruch.VariableObjects
         private AnimationCoroutine _showAnimation = default;
         [SerializeField]
         private AnimationCoroutine _hideAnimation = default;
-
+        
         private Coroutine _coroutine;
 
         protected override UpdateMode Update => UpdateMode.WhileAlive;
@@ -26,9 +26,13 @@ namespace TobiasBruch.VariableObjects
             {
                 _coroutine = StartCoroutine(ShowAsync());
             }
-            else
+            else if(oldValue != newValue)
             {
                 _coroutine = StartCoroutine(HideAsync());
+            }
+            else 
+            {
+                gameObject.SetActive(false);
             }
         }
 

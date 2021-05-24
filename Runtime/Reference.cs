@@ -75,7 +75,7 @@ namespace TobiasBruch.VariableObjects
 
         private void OnValueChanged(T1 oldValue, T1 newValue)
         {
-            EventValueChanged?.Invoke(oldValue, newValue);
+            EventValueChanged?.Invoke(oldValue, Value);
         }
 
         public sealed override object GetValueAsObject()
