@@ -24,6 +24,7 @@ namespace TobiasBruch.VariableObjects
 
             if (newValue)
             {
+            	gameObject.SetActive(true);
                 _coroutine = StartCoroutine(ShowAsync());
             }
             else if(oldValue != newValue)
